@@ -17,14 +17,13 @@ Simple, Elegant, No jQuery Dependency.
 	<html <b>ng-app="calendarApp"</b> >
 ```
 
-2.Include the required files .css, .js
+2. Include the required files .css, .js
 
 ``` html
 	  <link rel="stylesheet" href="components/calendar/css/calendar.css">
       <script src="components/calendar/js/libs/angular.min.js"></script>
       <script src="components/calendar/js/calendar.js"></script>
 ```
-
 
 3. Initialize
 
@@ -48,13 +47,13 @@ Simple, Elegant, No jQuery Dependency.
 	<calendar></calendar>
 ```
 
-
 2. Assigning year and month
 ``` html
 <calendar calendar-month="11" calendar-year="2014"></calendar>  
 ```
 
 3. Put some content
+
 ``` html
 <calendar calendar-month="8" calendar-year="2013" calendar-content="calendarContent" ></calendar>
 ```
