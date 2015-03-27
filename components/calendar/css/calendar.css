@@ -1,0 +1,129 @@
+
+
+body {
+    font-family:'Alef', Helvetica, sans-serif;
+    background: rgba(52, 73, 94, 1);
+    color:#ECF0F1;
+}
+.title {
+    text-align:center;
+    padding:15px;
+    font-size:2.4em;
+}
+
+#calendar {
+    margin:0 auto;
+    width:400px;
+    background: #ECF0F1;
+    -webkit-box-shadow: 10px 10px 5px 0px rgba(44,62,80,1);
+    -moz-box-shadow: 10px 10px 5px 0px rgba(44,62,80,1);
+    box-shadow: 10px 10px 5px 0px rgba(44,62,80,1);
+}
+
+#month {
+    font-size:3em;
+    text-align:center;
+    padding-top:15px;
+    padding-bottom:15px;
+    width:100%;
+    background:#E74C3C;
+}
+table {
+    border-spacing:0;
+}
+#days {
+    color: #34495E;
+}
+#days td {
+    font-size:1.5em;
+    text-align:center;
+    width:60px;
+    height:60px;
+    transition: background 0.5s ease;
+    cursor: pointer;
+}
+
+#days td:hover:not(.days-week) {
+    background:#1ABC9C;
+}
+.cal-day-outmonth:hover{
+    background: rgba(0, 0, 0, 0.1) !important;
+    cursor: default !important;
+  }
+.notHover{
+    background: #ECF0F1 !important;
+    cursor: default !important;
+}
+.week td, #month{
+    cursor: default !important;
+}
+
+.td_elem{
+    position: relative;
+    width: 100%;
+
+    height: 100%;
+
+    line-height: 60px;
+}
+
+.days-week {
+    font-weight:bold;
+    cursor: default !important;
+}
+.numbers, .week {
+    color: #34495E;
+}
+.cal-day-outmonth{
+    background: rgba(0, 0, 0, 0.1) !important;
+}
+.numDayWeek{
+    background: rgba(20, 102, 204, 0.31);
+}
+.calendarBlock{
+    width: 400px;
+    height: 505px;
+    display: inline-block;
+    vertical-align: top;
+    margin: 10px;
+}
+.calendar__left,
+.calendar__right{
+    display: inline-block;
+    vertical-align: top;
+}
+.calendar__left{
+    width: 100%;
+    position: absolute;
+    padding-right: 400px;
+    left: 0;
+    top: 0;
+    box-sizing: border-box;
+}
+.calendar__right{
+    width: 300px;
+    height: auto;
+    background: rgba(236, 240, 241, 1);
+    color: #34495E;
+    padding: 0 15px;
+    box-sizing: border-box;
+    position: absolute;
+    right: 50px;
+}
+.cal-day-weekend{
+    background: rgba(235, 81, 33, 0.2);
+}
+.cal-day-today{
+    color: rgb(0, 120, 255);
+    font-weight:bold;
+
+}
+.curYearInfo{
+    width: 100%;
+    height: 50px;
+    text-align: center;
+
+}
+.kur_span{
+    font-style: italic;
+}

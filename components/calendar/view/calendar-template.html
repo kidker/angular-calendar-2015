@@ -1,0 +1,92 @@
+﻿<div class="calendar">
+    <div class="calendar__left" id="{{curYear}}">
+        <div class="curYearInfo"><h1>Производственный календарь <span class="kur_span">{{curYear}}</span></h1></div>
+    <div ng-repeat="month in months" class="calendarBlock">
+            <div id='calendar'>
+                <div id='month' attr-numMonth="{{ $index+1 }} ">{{  language['ms'+$index ] }}</div>
+                <div id='days'>
+                    <table>
+                        <tbody>
+
+                        <tr class='week'>
+                        <td class="notHover"></td>
+                        <td class='days-week'>{{language.d1}}</td>
+                        <td class='days-week'>{{language.d2}}</td>
+                        <td class='days-week'>{{language.d3}}</td>
+                        <td class='days-week'>{{language.d4}}</td>
+                        <td class='days-week'>{{language.d5}}</td>
+                        <td class='days-week'>{{language.d6}}</td>
+                        <td class='days-week'>{{language.d0}}</td>
+
+                    </tr>
+
+                        <tr class='numbers' ng-repeat="week in month">
+                            <td class="numDayWeek days-week">{{ week.weekNum+1  }}</td>
+                            <td  ng-repeat="day in week" ng-class="{'cal-day-outmonth' : day.outmonth , 'cal-day-weekend' : day.status , 'cal-day-today' : day.isToday }">
+                                <div class="td_elem" ng-click="toggleClickDay(day)">
+                                    <span class="pull-right" data-cal-date="{{day.dateFormatted}}" data-cal-view="day">{{day.date}}</span>
+                                    <div class="content">
+                                        <div ng-html="day.content"></div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="calendar__right">
+        <h1>Инструкция</h1>
+        <p>Нажмите на рабочий день, чтобы отметить его как не рабочий.</p>
+        <p>Нажмите на нерабочий день, чтобы отметить его как рабочий.</p>
+        <hr>
+        <h3>Управление</h3>
+        <label>Год:</label>
+        <select ng-options="size as size.name for size in listYears " ng-model="itemListYear" ng-change="selectYear()"></select>
+
+        <button ng-click="initYear()">Задать</button>
+        <button ng-click="calendarClear()">Сбросить</button>
+        <hr/>
+        <h3>Обратная связь</h3>
+        <ul>
+            <li>Рабочих дней: {{ months.daysWork.workDays }}</li>
+            <li>Нерабочих дней: {{ months.daysWork.notWorkDays }} </li>
+        </ul>
+        <button ng-click="workCalculation(months.daysWork.workDays*8, months.daysWork.notWorkDays*8)">Рассчитать</button>
+        <hr/>
+        <h3>Легенда</h3>
+
+        <table id="days">
+            <tr>
+                <td class="cal-day-outmonth">1</td>
+                <td class="notHover">
+                    <span class="infoText">неактивный&nbsp;день</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="cal-day-weekend">2</td>
+                <td class="notHover">
+                    <span class="infoText">выходной&nbsp;день</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="cal-day-today">3</td>
+                <td class="notHover">
+                    <span class="infoText">текущий&nbsp;день</span>
+                </td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td class="notHover">
+                    <span class="infoText"  >рабочий&nbsp;день</span>
+                </td>
+            </tr>
+
+        </table>
+        <hr/>
+    </div>
+</div>

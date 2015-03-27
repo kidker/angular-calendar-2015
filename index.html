@@ -1,0 +1,29 @@
+﻿<!doctype html>
+<html ng-app="calendarApp">
+  <head>
+      <title>Angular Calendar</title>
+
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+      <link rel="stylesheet" href="components/calendar/css/calendar.css">
+
+      <script src="components/calendar/js/libs/angular.min.js"></script>
+      <script src="components/calendar/js/calendar.js"></script>
+
+  </head>
+  <body>
+  
+  <div class="container" ng-controller="MainCtrl">
+          <calendar calendar-content="calendarContent"></calendar>
+  </div>
+
+  
+  <script>
+
+    var app = angular.module('calendarApp', ['simpleCalendar']);
+    var MainCtrl = function($scope) {};
+
+  </script>
+
+  </body>
+</html>
