@@ -3,20 +3,20 @@
         <div class="curYearInfo"><h1>Производственный календарь <span class="kur_span">{{curYear}}</span></h1></div>
     <div ng-repeat="month in months" class="calendarBlock">
             <div id='calendar'>
-                <div id='month' attr-numMonth="{{ $index+1 }} ">{{  language['ms'+$index ] }}</div>
+                <div id='month' attr-numMonth="{{ $index+1 }} ">{{  language[$index] }}</div>
                 <div id='days'>
                     <table>
                         <tbody>
 
                         <tr class='week'>
                         <td class="notHover"></td>
-                        <td class='days-week'>{{language.d1}}</td>
-                        <td class='days-week'>{{language.d2}}</td>
-                        <td class='days-week'>{{language.d3}}</td>
-                        <td class='days-week'>{{language.d4}}</td>
-                        <td class='days-week'>{{language.d5}}</td>
-                        <td class='days-week'>{{language.d6}}</td>
-                        <td class='days-week'>{{language.d0}}</td>
+                        <td class='days-week'>{{languageDayWeek['1']}}</td>
+                        <td class='days-week'>{{languageDayWeek['2']}}</td>
+                        <td class='days-week'>{{languageDayWeek['3']}}</td>
+                        <td class='days-week'>{{languageDayWeek['4']}}</td>
+                        <td class='days-week'>{{languageDayWeek['5']}}</td>
+                        <td class='days-week'>{{languageDayWeek['6']}}</td>
+                        <td class='days-week'>{{languageDayWeek['0']}}</td>
 
                     </tr>
 
@@ -46,7 +46,7 @@
         <hr>
         <h3>Управление</h3>
         <label>Год:</label>
-        <select ng-options="size as size.name for size in listYears " ng-model="itemListYear" ng-change="selectYear()"></select>
+        <select ng-options="size as size.code for size in listYears " ng-model="itemListYear" ng-change="selectYear()"></select>
 
         <button ng-click="initYear()">Задать</button>
         <button ng-click="calendarClear()">Сбросить</button>

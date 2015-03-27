@@ -3,6 +3,33 @@
 
 var app = angular.module('simpleCalendar', []);
 
+var language = [
+
+    'Январь',
+     'Февраль',
+     'Март',
+     'Апрель',
+     'Май',
+     'Июнь',
+     'Июль',
+     'Август',
+     'Сентябрь',
+     'Октябрь',
+    'Ноябрь',
+    'Декабрь'
+
+];
+var languageDayWeek = [
+    'ВС',
+    'ПН',
+    'ВТ',
+    'СР',
+    'ЧТ',
+    'ПТ',
+    'СБ'
+];
+
+/*
 var language = {
 
     ms0: 'Январь',
@@ -31,11 +58,14 @@ var language = {
     nextMonth: "Next"
 
 };
+*/
 
 var weekNum = 0;
 
 var localDayWeek = 0;
 
+/*
+//Их вообще можно не использовать
 Date.prototype.getMonthFormatted = function() {
     var month = this.getMonth() + 1;
     return month < 10 ? '0' + month : month;
@@ -46,15 +76,17 @@ Date.prototype.getMonthNumber = function() {
     var month = this.getMonth() + 1;
     return parseInt(month);
 }
+*/
 
 
-app.directive('ngHtml', function() {
-    return function(scope, element, attrs) {
-        scope.$watch(attrs.ngHtml, function(value) {
-            element[0].innerHTML = value;
+//use $sce
+var ngBindHtmlDirective = ['$sce', function($sce) {
+    return function(scope, element, attr) {
+        scope.$watch($sce.parseAsHtml(attr.ngBindHtml), function(value) {
+            element.html(value || '');
         });
-    }
-});
+    };
+}];
 
 
 var calendarLinkFunction = function (scope, element) {
@@ -64,6 +96,7 @@ var calendarLinkFunction = function (scope, element) {
     //Хранилище данных по годам
     scope.storageMonths = [];
     //Список SELECT
+    /*
     scope.listYears = [
         {code: 2015, name: '2015'},
         {code: 2016, name: '2016'},
@@ -73,6 +106,16 @@ var calendarLinkFunction = function (scope, element) {
         {code: 2020, name: '2020'}
 
     ];
+    */
+
+
+    var arrListYears = [];
+    for (var i = 0;i < 100;i++){
+        arrListYears.push({'code': 2015+i, 'name' : (2015+i).toString()});
+    }
+    //{'a': <index>} похож на json строку, тогда нужно использовать JSON.stringify()
+    //а обратно это JSON.parse
+    scope.listYears = arrListYears;
     scope.itemListYear =  scope.listYears[0];
 
     //scope.currentDate = new Date();
@@ -82,6 +125,7 @@ var calendarLinkFunction = function (scope, element) {
     scope.curYear = scope.today.getFullYear();
 
     scope.language = language;
+    scope.languageDayWeek = languageDayWeek;
     //scope.navigate = {};
 
     scope.toggleClickDay = function(obj){
@@ -102,25 +146,26 @@ var calendarLinkFunction = function (scope, element) {
             }
         }
 
-    };
+    }
     scope.workCalculation = function(a, b){
         alert("Из расчета 8 рабочих часов в день, тогда \nрабочих : "+a+", \nнерабочих : "+b+" !");
-    };
+    }
     scope.calendarClear = function(obj, event){
         renderCalendar(scope.itemListYear.code);
-    };
+        scope.curYear = scope.itemListYear.code;
+    }
     scope.selectYear = function(obj, event){
 
-    };
+    }
     scope.initYear = function(obj, event){
 
         refreshCalendar(scope.itemListYear.code);
 
 
-    };
+    }
 
     scope.workDays = 0;
-    scope.notWorkDays = -22;
+    scope.notWorkDays = 0;
 
 
 
@@ -129,7 +174,7 @@ var calendarLinkFunction = function (scope, element) {
         return new Date(year, month, 0).getDate();
     }
 
-    // month between 1 ~ 12
+    // Получаем содержимое даты
     var getDateContent = function(year,month,date){
 
         if(contentObj != null && contentObj[year] != null && 
@@ -140,7 +185,7 @@ var calendarLinkFunction = function (scope, element) {
         return "";
     }
 
-    // month between 1 ~ 12
+    // Генерируем месяц
     var monthGenegrator = function(month, year){
         //Обнуляем переменную для хранения дней недели 1~6
         localDayWeek = 1;
@@ -178,7 +223,7 @@ var calendarLinkFunction = function (scope, element) {
         return monthArray;
     }
 
-    //month between 1~12
+    // Генерируем неделю
     var weekGenegrator = function(year , month , startDate , daysOfMonth , prevDaysOfMonth){
         var week = [];
 
@@ -200,7 +245,7 @@ var calendarLinkFunction = function (scope, element) {
                 realDate =  startDate+i+1;   
                 content = getDateContent(year , month , realDate);                 
             }
-            if (i == 6 || i == 7){scope.notWorkDays++;}//Считаем кол-во выходых
+            if ( (i == 6 || i == 7) && outmonth == false){scope.notWorkDays++;}//Считаем кол-во выходых
             week.push({
                 "outmonth" : outmonth,                    
                 "day": i,
@@ -227,7 +272,7 @@ var calendarLinkFunction = function (scope, element) {
         var arr = [];
 
         scope.workDays = 0;
-        scope.notWorkDays = -22;
+        scope.notWorkDays = 0;
         weekNum = 0;
 
         for(var i=1;i<13;i++){
@@ -236,19 +281,19 @@ var calendarLinkFunction = function (scope, element) {
 
         //Считаем остатки рабочих дней
         scope.workDays-=scope.notWorkDays;
-        //Закидываем счетчики в хранящийся массив данных
+        //Закидываем счетчики в хранящийся массив данных года
         arr['daysWork'] = {
             'workDays' : scope.workDays,
             'notWorkDays' : scope.notWorkDays
         };
         //Помещаем в хранилище
         scope.storageMonths[year] = arr;
-        //Изменяем оригинальную инстанцию на ссылку из хранилища
+        //Помещаем в массив months, массив из storageMonths
         scope.months = scope.storageMonths[year];
 
-
+        return true;
     }
-
+    //Обновляем календарь
     var refreshCalendar = function(year){
 
         if (scope.storageMonths[year] !== undefined){
@@ -257,6 +302,7 @@ var calendarLinkFunction = function (scope, element) {
             renderCalendar(year);
         }
         scope.curYear = year;
+
 
     }
 
@@ -272,7 +318,10 @@ app.directive("calendar", function(){
             assignedMonth: '=calendarMonth',
             assignedyear: '=calendarYear'
         },
-        replace: true,
+        //replace: true,
+        //Неуверен, но вместо replace используется $compile
+        transclude: false,
+
         link: calendarLinkFunction,
         templateUrl: 'components/calendar/view/calendar-template.html'
     }
