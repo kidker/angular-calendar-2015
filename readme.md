@@ -1,6 +1,6 @@
 ## 
 
-# [Angular Bootstrap Calendar](http://mofas.github.io/angular-bootstrap-calendar/examples/index.html) 
+# [Angular Calendar 2015](https://github.com/matrosovdmitry/angular-calendar-2015) 
 
 
 Simple, Elegant, No jQuery Dependency.
@@ -10,41 +10,42 @@ Simple, Elegant, No jQuery Dependency.
 
 ## Installation
 
-1.Include the required libraries
+1. Add np-app="calendarApp" in head html
+	
+``` html
+	<!doctype html>
+	<html <b>ng-app="calendarApp"</b> >
+```
+
+2.Include the required files .css, .js
 
 ``` html
-<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.1/angular.min.js"></script>
+	  <link rel="stylesheet" href="components/calendar/css/calendar.css">
+      <script src="components/calendar/js/libs/angular.min.js"></script>
+      <script src="components/calendar/js/calendar.js"></script>
 ```
 
 
-2.Download three files in src folder:
+3. Initialize
 
-src/calendar.css
+```html
+...
+	 <script>
 
-src/calendar.js
+		var app = angular.module('calendarApp', ['simpleCalendar']);		
 
-src/calendar-template.html
+	  </script>
 
-
-3.Include the files
-
-``` html
-<link rel="stylesheet" href="calendar.css">
-<script src="calendar.js"></script>
+	  </body>
+</html>
 ```
-
-
-Calendar.js and calendar-template.html need to put in the same folder,
-or you can modify the templateURl in calendar.js.
-
 
  
 ## Example
 
 1. Basic usage
 ``` html
-<calendar></calendar>
+	<calendar></calendar>
 ```
 
 
@@ -77,7 +78,7 @@ $scope.calendarContent = {
 
   The MIT License (MIT)
 
-  Copyright (c) 2013 Victor Bjelkholm
+  Copyright (c) 2015 Matrosov Dmitry
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
